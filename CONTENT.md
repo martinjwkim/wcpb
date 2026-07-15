@@ -321,3 +321,40 @@ Everything local — nothing hotlinked. Payment-card icons intentionally skipped
 Brand palette observed (logo + membership table + wall lettering): dark
 forest green (~#1d4433), golden sun yellow (~#f4b31c), warm cream
 (~#faf5e6), white. Sale strikethroughs use red.
+
+## Google reviews (harvested 2026-07-14 from the Google Maps listing)
+
+Real 5-star reviews scraped from the club's Google Maps place page
+(google.com/maps, "West Coast Pickleball - Yorba Linda"). Verbatim full
+texts below; site quotes may trim with ellipses but must not reword.
+Yelp itself blocks scraping — the older Yelp quotes (Ivana D., Joe F.,
+Krystle G.) remain valid; these Google quotes are richer replacements.
+
+- **Ali H.** (5★): "Went there yesterday with my wife and it was such a great
+  experience! The place is super clean, well-kept, and has an awesome
+  community vibe. We downloaded the app beforehand and booking was super
+  easy. We played until 11 PM on a Friday night and people were still showing
+  up—it was such a vibe!"
+- **Gary Yu** (5★): "Great place for pickleball.  Courts were well spread out
+  with effective barriers between each.  Plenty of comfy seating + tables +
+  fully air conditioned for people waiting.  The staff was friendly and
+  helpful.  And as people visiting out of town, they had all the equipment
+  available to rent for us.  Thanks for a great time!"
+- **Dwight Carlin** (5★): "Played open play here as a non-member. Staff was
+  accommodating and helpful. Even though I didn't know anyone playing there,
+  I felt the vibe was very welcoming. Great experience and I'll play here
+  again when visiting Yorba Linda."
+- **Roanne Apides** (5★): "I absolutely love West Coast! The concierge team is
+  incredibly responsive and always helps me find a solution quickly (booking
+  courts and reservations). The space is great and has plenty of room for
+  small groups. I've hosted a couple of work parties here, and each one
+  turned out really well. / The app is also super easy to use, and I've had
+  zero issues with bookings or reservations. The facility is always clean and
+  well maintained, which makes every visit enjoyable. I highly recommend this
+  place!"
+- **Shawn Verma** (5★): "First and only indoor pickleball facility in Orange
+  County! Great to play at on a cold winter day or a hot summer one, or
+  anytime year-round. Comfortable indoor environment, many courts, great
+  community of players. Super fun events. Very reasonably priced membership
+  options. Coaches and lessons available. A beautiful indoor facility that
+  you are guaranteed to enjoy and have a ton of fun playing at!"

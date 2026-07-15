@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom'
 import Reveal from '../Reveal.jsx'
-import { LINKS, CONTACT } from '../../data.js'
+import { CONTACT } from '../../data.js'
 
 export default function EventsBanner() {
   return (
@@ -29,14 +30,12 @@ export default function EventsBanner() {
           </p>
         </Reveal>
         <Reveal delay={240} className="mt-8 flex flex-wrap items-center gap-5">
-          <a
-            href={LINKS.privateEvent}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/book-event"
             className="btn bg-green-950 text-cream-50 shadow-card hover:-translate-y-0.5 hover:bg-green-900"
           >
             Book event
-          </a>
+          </Link>
           <span className="font-body text-sm font-semibold text-green-950/70">Find us at {CONTACT.address}</span>
         </Reveal>
       </div>

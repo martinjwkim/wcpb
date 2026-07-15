@@ -4,9 +4,11 @@ import { LINKS, CONTACT } from '../data.js'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
+  { to: '/programs', label: 'Programs' },
   { to: '/membership', label: 'Membership' },
   { to: '/locations', label: 'Locations' },
-  { to: '/programs', label: 'Programs' },
+  { to: '/events', label: 'Events' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 function DesktopLink({ to, label }) {
@@ -48,7 +50,8 @@ export default function Nav() {
   }, [open])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-cream-50/10 bg-green-950/92 backdrop-blur-md">
+    <>
+      <header className="sticky top-0 z-50 border-b border-cream-50/10 bg-green-950/92 backdrop-blur-md">
       <a
         href="#main"
         className="absolute left-4 top-2 z-50 -translate-y-[200%] rounded-lg bg-sun-500 px-4 py-2 font-body text-sm font-semibold text-green-950 transition-transform duration-200 focus-visible:translate-y-0"
@@ -65,19 +68,13 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-7" aria-label="Primary">
           {NAV_ITEMS.map((item) => (
             <DesktopLink key={item.to} {...item} />
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <a
-            href={LINKS.phone}
-            className="font-body text-sm font-semibold tracking-wide text-cream-100/80 transition-colors duration-200 hover:text-sun-400"
-          >
-            {CONTACT.phone}
-          </a>
+        <div className="hidden items-center gap-4 lg:flex">
           <a href={LINKS.book} target="_blank" rel="noopener noreferrer" className="btn btn-sun !px-6 !py-3 !text-base">
             Book a court
           </a>
@@ -88,7 +85,7 @@ export default function Nav() {
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className="flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full border border-cream-50/20 transition-colors duration-200 hover:border-sun-500 active:scale-95 md:hidden"
+          className="flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full border border-cream-50/20 transition-colors duration-200 hover:border-sun-500 active:scale-95 lg:hidden"
         >
           <span
             className={`h-0.5 w-5 rounded bg-cream-50 transition-transform duration-300 ${open ? 'translate-y-[7px] rotate-45' : ''}`}
@@ -99,10 +96,12 @@ export default function Nav() {
           />
         </button>
       </div>
+      </header>
 
-      {/* mobile menu */}
+      {/* mobile menu — sibling of the (backdrop-blurred) header so `fixed`
+          resolves to the viewport, not a filter-induced containing block */}
       <div
-        className={`fixed inset-x-0 bottom-0 top-[4.5rem] z-40 grain overflow-y-auto bg-green-950 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-[4.5rem] z-40 grain overflow-y-auto bg-green-950 transition-opacity duration-300 lg:hidden ${
           open ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
@@ -134,6 +133,6 @@ export default function Nav() {
           </a>
         </nav>
       </div>
-    </header>
+    </>
   )
 }

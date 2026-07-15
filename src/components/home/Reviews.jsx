@@ -17,9 +17,12 @@ export default function Reviews() {
               </h2>
             </Reveal>
           </div>
-          <Reveal delay={160}>
+          <Reveal delay={160} className="flex flex-wrap gap-3">
+            <a href={LINKS.googleReviews} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
+              Google reviews
+            </a>
             <a href={LINKS.yelp} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
-              Verified Yelp reviews
+              Yelp
             </a>
           </Reveal>
         </div>
@@ -40,7 +43,7 @@ export default function Reviews() {
           ))}
         </div>
         <Reveal delay={320}>
-          <p className="mt-8 font-body text-sm text-cream-100/60">See the full story from our community on Yelp.</p>
+          <p className="mt-8 font-body text-sm text-cream-100/60">See the full story from our community on Google and Yelp.</p>
         </Reveal>
       </div>
     </section>

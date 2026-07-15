@@ -57,8 +57,9 @@ export default function Footer() {
             <h3 className="display text-xl text-sun-400">Play</h3>
             <FooterExt href={LINKS.schedule}>Open play schedule</FooterExt>
             <FooterExt href={LINKS.book}>Book court time</FooterExt>
-            <FooterExt href={LINKS.privateEvent}>Book private event</FooterExt>
+            <FooterInt to="/events">Private events</FooterInt>
             <FooterInt to="/locations">Yorba Linda club</FooterInt>
+            <FooterInt to="/gameplay">How to play</FooterInt>
           </nav>
           <nav aria-label="Programs" className="flex flex-col gap-3">
             <h3 className="display text-xl text-sun-400">Programs</h3>
@@ -66,9 +67,11 @@ export default function Footer() {
             <FooterInt to="/programs#pickleball-101">Free Pickleball 101</FooterInt>
             <FooterInt to="/programs#junior-academy">Junior Academy</FooterInt>
             <FooterInt to="/membership">Membership &amp; pricing</FooterInt>
+            <FooterInt to="/contact#faq">FAQs</FooterInt>
           </nav>
           <div className="flex flex-col gap-3">
             <h3 className="display text-xl text-sun-400">Contact</h3>
+            <FooterInt to="/contact">Get in touch</FooterInt>
             <a href={LINKS.phone} className="font-body font-semibold text-cream-100 transition-colors duration-200 hover:text-sun-400">
               {CONTACT.phone}
             </a>
@@ -95,7 +98,7 @@ export default function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-cream-50/10 pt-6 font-body text-xs text-cream-100/50 sm:flex-row">
           <p>© 2025 West Coast Pickleball. All Rights Reserved.</p>
-          <p>Redesign concept — demo only, not affiliated with wcpb.com production site.</p>
+          <p>Yorba Linda, CA · Pomona coming 2026</p>
         </div>
       </div>
     </footer>

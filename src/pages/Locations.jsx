@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import StatusChip from '../components/StatusChip.jsx'
+import PaddleMark from '../components/PaddleMark.jsx'
 import { LINKS, CONTACT } from '../data.js'
 
 const EXPECT = [
@@ -26,6 +28,7 @@ export default function Locations() {
     <>
       {/* header */}
       <section className="grain glow-dark relative overflow-hidden bg-green-950 pb-20 pt-24 lg:pb-28 lg:pt-32">
+        <PaddleMark />
         <div className="court-frame" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
           <p className="eyebrow rise text-cream-100" style={{ '--rise-delay': '60ms' }}>
@@ -210,14 +213,12 @@ export default function Locations() {
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <a
-              href={LINKS.privateEvent}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/book-event"
               className="btn bg-green-950 text-cream-50 shadow-card hover:-translate-y-0.5 hover:bg-green-900"
             >
               Book event
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>

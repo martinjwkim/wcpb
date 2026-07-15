@@ -1,5 +1,169 @@
+import { useState } from 'react'
 import Reveal from '../components/Reveal.jsx'
-import { LINKS, TIERS, COMPARISON, RESERVED_RATES } from '../data.js'
+import PaddleMark from '../components/PaddleMark.jsx'
+import { LINKS, TIERS, COMPARISON, RESERVED_RATES, OPEN_PLAY } from '../data.js'
+
+// Renders a comparison-table cell: checkmarks and "free" get the sun accent,
+// dashes stay quiet, so included/excluded reads at a glance. A "|" in the
+// value splits a headline ("Free before 3PM weekdays") from its fine print.
+function CellValue({ value }) {
+  if (value === '✓') {
+    return (
+      <span className="grid h-6 w-6 place-items-center rounded-full bg-sun-500 text-green-950">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span className="sr-only">Included</span>
+      </span>
+    )
+  }
+  if (value === '—') {
+    return (
+      <span className="text-green-950/30">
+        —<span className="sr-only">Not included</span>
+      </span>
+    )
+  }
+  if (value.includes('|')) {
+    const [main, sub] = value.split('|')
+    return (
+      <>
+        <span className="font-bold text-sun-600">{main}</span>
+        <span className="mt-0.5 block text-[13px] leading-snug text-green-950/60">{sub}</span>
+      </>
+    )
+  }
+  if (/^free/i.test(value)) return <span className="font-bold text-sun-600">{value}</span>
+  return value
+}
+
+// "Which fits you best?" made literal: pick how you play, the matching tier
+// column lights up (and scrolls into view on mobile).
+function ComparisonTable() {
+  const [selected, setSelected] = useState(null)
+
+  function pick(i) {
+    const next = selected === i ? null : i
+    setSelected(next)
+    if (next !== null) {
+      document.getElementById(`tier-col-${i}`)?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+  }
+
+  return (
+    <>
+      <div className="mt-10">
+        <p className="font-body text-sm font-semibold uppercase tracking-[0.14em] text-green-800">
+          How do you play? Pick one to see your match
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {COMPARISON.columns.map((col, i) => (
+            <button
+              key={col.name}
+              type="button"
+              onClick={() => pick(i)}
+              aria-pressed={selected === i}
+              className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-2 px-4 py-2 font-body text-[15px] font-semibold transition-colors duration-200 ${
+                selected === i
+                  ? 'border-sun-500 bg-sun-500 text-green-950'
+                  : 'border-green-800/20 bg-cream-50 text-green-950/75 hover:border-green-800/45'
+              }`}
+            >
+              &ldquo;{col.persona}&rdquo;
+              <span className={`text-[13px] font-bold uppercase tracking-wide ${selected === i ? 'text-green-900' : 'text-green-800/60'}`}>
+                → {col.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <p className="mt-8 font-body text-sm font-semibold text-green-800 md:hidden" aria-hidden="true">
+        Swipe to compare all four tiers →
+      </p>
+      <div className="relative mt-4 md:mt-8">
+        <div className="overflow-x-auto rounded-card border border-green-800/10 shadow-card">
+          <table className="w-full min-w-[52rem] table-fixed border-collapse bg-cream-50 text-left font-body text-[15px] md:min-w-[60rem]">
+            <colgroup>
+              <col className="w-40 md:w-[14rem]" />
+              <col />
+              <col />
+              <col className="w-[24%]" />
+              <col />
+            </colgroup>
+            <thead>
+              <tr className="bg-green-950 align-top text-cream-50">
+                <th scope="col" className="sticky left-0 bg-green-950 px-5 py-5">
+                  <span className="sr-only">Feature</span>
+                </th>
+                {COMPARISON.columns.map((col, i) => (
+                  <th
+                    key={col.name}
+                    id={`tier-col-${i}`}
+                    scope="col"
+                    className={`px-5 py-5 font-normal transition-colors duration-200 ${selected === i ? 'bg-green-800' : ''}`}
+                  >
+                    <span
+                      className={`block font-display text-xl font-semibold uppercase tracking-wide ${
+                        col.name === 'Emerald' || col.name === 'Gold' ? 'text-sun-400' : ''
+                      }`}
+                    >
+                      {col.name}
+                    </span>
+                    <span className="tabular mt-0.5 block text-sm font-semibold text-cream-100/85">{col.price}</span>
+                    <span
+                      className={`mt-2 inline-block rounded-full bg-sun-500 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-green-950 transition-opacity duration-200 ${
+                        selected === i ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      aria-hidden={selected !== i}
+                    >
+                      Your match
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            {COMPARISON.groups.map((group) => (
+              <tbody key={group.title}>
+                <tr>
+                  <th
+                    scope="colgroup"
+                    colSpan={5}
+                    className="sticky left-0 border-y border-green-800/10 bg-cream-200/80 px-5 py-2.5 font-body text-xs font-bold uppercase tracking-[0.18em] text-green-800"
+                  >
+                    {group.title}
+                  </th>
+                </tr>
+                {group.rows.map(([feature, ...values], i) => (
+                  <tr key={feature} className={i % 2 ? 'bg-cream-100/70' : ''}>
+                    <th scope="row" className={`sticky left-0 px-5 py-3.5 font-semibold text-green-950 ${i % 2 ? 'bg-cream-100' : 'bg-cream-50'}`}>
+                      {feature}
+                    </th>
+                    {values.map((value, j) => (
+                      <td
+                        key={j}
+                        className={`tabular px-5 py-3.5 align-top text-green-950/80 transition-colors duration-200 ${
+                          selected === j ? 'bg-sun-500/[0.13]' : ''
+                        }`}
+                      >
+                        <CellValue value={value} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            ))}
+          </table>
+        </div>
+        {/* mobile scroll affordance: fade hints at the off-screen tiers */}
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-14 rounded-r-card bg-gradient-to-l from-cream-50/95 to-transparent md:hidden"
+          aria-hidden="true"
+        />
+      </div>
+    </>
+  )
+}
 
 function RateCard({ band, hours, days, prices, highlight = false }) {
   return (
@@ -32,6 +196,7 @@ export default function Membership() {
     <>
       {/* header */}
       <section className="grain glow-dark relative overflow-hidden bg-green-950 pb-20 pt-24 lg:pb-28 lg:pt-32">
+        <PaddleMark />
         <div className="court-frame" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
           <p className="eyebrow rise text-cream-100" style={{ '--rise-delay': '60ms' }}>
@@ -171,40 +336,17 @@ export default function Membership() {
                   2–3 hour sessions
                 </p>
               </div>
-              <dl className="mt-6 grid gap-x-8 gap-y-6 border-t border-green-800/10 pt-6 sm:grid-cols-2 lg:grid-cols-4">
-                <div>
-                  <dt className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-green-800/70">
-                    Non-Member
-                  </dt>
-                  <dd className="display tabular mt-1.5 text-4xl text-green-950">$15–$20</dd>
-                </div>
-                <div>
-                  <dt className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-green-800/70">
-                    Basic
-                  </dt>
-                  <dd className="display tabular mt-1.5 text-4xl text-green-950">$10–$15</dd>
-                </div>
-                <div>
-                  <dt className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-green-800/70">
-                    Gold
-                  </dt>
-                  <dd className="mt-1.5">
-                    <span className="display text-4xl text-sun-600">Free</span>
-                    <span className="mt-1 block font-body text-sm leading-snug text-green-950/70">
-                      weekdays before 3PM — up to 50% off after 3PM &amp; weekends
-                    </span>
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-green-800/70">
-                    Emerald
-                  </dt>
-                  <dd className="mt-1.5">
-                    <span className="display text-4xl text-sun-600">Free</span>
-                    <span className="mt-1 block font-body text-sm leading-snug text-green-950/70">any time</span>
-                  </dd>
-                </div>
-              </dl>
+              <div className="mt-6 divide-y divide-green-800/10 border-t border-green-800/10">
+                {OPEN_PLAY.map(([tier, price, note]) => (
+                  <div key={tier} className="grid items-baseline gap-x-6 gap-y-1 py-4 sm:grid-cols-[9rem_7rem_1fr]">
+                    <p className="font-body text-sm font-bold uppercase tracking-[0.14em] text-green-800">{tier}</p>
+                    <p className={`display tabular text-3xl ${price === 'Free' ? 'text-sun-600' : 'text-green-950'}`}>
+                      {price}
+                    </p>
+                    <p className="font-body text-[15px] leading-snug text-green-950/70">{note}</p>
+                  </div>
+                ))}
+              </div>
               <p className="mt-6 border-t border-green-800/10 pt-5 font-body text-sm text-green-950/60">
                 Check the{' '}
                 <a
@@ -235,53 +377,7 @@ export default function Membership() {
           </Reveal>
 
           <Reveal delay={160}>
-            <p className="mt-8 font-body text-sm font-semibold text-green-800 md:hidden" aria-hidden="true">
-              Swipe to compare all four tiers →
-            </p>
-            <div className="relative mt-4 md:mt-12">
-              <div className="overflow-x-auto rounded-card border border-green-800/10 shadow-card">
-                <table className="w-full min-w-[46rem] table-fixed border-collapse bg-cream-50 text-left font-body text-[15px] md:min-w-[56rem]">
-                  <colgroup>
-                    <col className="w-36 md:w-[15rem]" />
-                    <col />
-                    <col />
-                    <col className="w-[22%]" />
-                    <col className="w-[22%]" />
-                  </colgroup>
-                <thead>
-                  <tr className="bg-green-950 text-cream-50">
-                    <th scope="col" className="sticky left-0 bg-green-950 px-5 py-4 font-display text-lg font-semibold uppercase tracking-wide">
-                      Features
-                    </th>
-                    {COMPARISON.columns.map((col) => (
-                      <th key={col} scope="col" className="px-5 py-4 font-display text-lg font-semibold uppercase tracking-wide">
-                        {col === 'Emerald' || col === 'Gold' ? <span className="text-sun-400">{col}</span> : col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {COMPARISON.rows.map(([feature, ...values], i) => (
-                    <tr key={feature} className={i % 2 ? 'bg-cream-100/70' : ''}>
-                      <th scope="row" className={`sticky left-0 px-5 py-3.5 font-semibold text-green-950 ${i % 2 ? 'bg-cream-100' : 'bg-cream-50'}`}>
-                        {feature}
-                      </th>
-                      {values.map((value, j) => (
-                        <td key={j} className="tabular px-5 py-3.5 text-green-950/80">
-                          {value}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-                </table>
-              </div>
-              {/* mobile scroll affordance: fade hints at the off-screen tiers */}
-              <div
-                className="pointer-events-none absolute inset-y-0 right-0 w-14 rounded-r-card bg-gradient-to-l from-cream-50/95 to-transparent md:hidden"
-                aria-hidden="true"
-              />
-            </div>
+            <ComparisonTable />
           </Reveal>
           <Reveal delay={220}>
             <p className="mt-5 font-body text-sm text-green-950/60">{COMPARISON.footnote}</p>

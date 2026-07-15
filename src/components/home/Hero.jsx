@@ -26,13 +26,13 @@ export default function Hero() {
         </p>
         <h1 className="display mt-5 text-[clamp(3.4rem,9.5vw,8.5rem)] text-cream-50">
           <span className="rise block" style={{ '--rise-delay': '160ms' }}>
-            Orange County&rsquo;s only
+            Orange County&rsquo;s best
           </span>
           <span className="rise block text-sun-400" style={{ '--rise-delay': '260ms' }}>
-            indoor + outdoor
+            indoor pickleball
           </span>
           <span className="rise block" style={{ '--rise-delay': '360ms' }}>
-            pickleball facility
+            facility
           </span>
         </h1>
         <p

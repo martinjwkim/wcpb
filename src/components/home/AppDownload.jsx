@@ -1,8 +1,7 @@
 import Reveal from '../Reveal.jsx'
-import { LINKS } from '../../data.js'
 
 // The live site shows unlinked App Store / Google Play badges — app-store
-// URLs are TBD, so the badges stay images and the CTA points at booking.
+// URLs are TBD, so the badges stay images.
 export default function AppDownload() {
   return (
     <section className="grain glow-dark relative overflow-hidden bg-green-950 py-24 lg:py-28">
@@ -23,34 +22,29 @@ export default function AppDownload() {
             </p>
           </Reveal>
         </div>
-        <Reveal delay={240} className="flex flex-col items-center gap-5">
-          <div className="flex items-start gap-5">
-            <figure className="flex flex-col items-center gap-2">
-              <img
-                src="/images/badge-app-store.png"
-                alt="QR code — scan to get the WCPB app for iOS"
-                className="h-24 w-24 rounded-2xl bg-white p-1.5 shadow-card"
-                width="96"
-                height="96"
-                loading="lazy"
-              />
-              <figcaption className="display text-lg tracking-wide text-cream-100">iOS</figcaption>
-            </figure>
-            <figure className="flex flex-col items-center gap-2">
-              <img
-                src="/images/badge-google-play.png"
-                alt="QR code — scan to get the WCPB app for Android"
-                className="h-24 w-24 rounded-2xl bg-white p-1.5 shadow-card"
-                width="96"
-                height="96"
-                loading="lazy"
-              />
-              <figcaption className="display text-lg tracking-wide text-cream-100">Android</figcaption>
-            </figure>
-          </div>
-          <a href={LINKS.book} target="_blank" rel="noopener noreferrer" className="btn btn-sun">
-            Play now
-          </a>
+        <Reveal delay={240} className="flex flex-none items-start gap-6 sm:gap-8">
+          <figure className="flex flex-col items-center gap-3">
+            <img
+              src="/images/badge-app-store.png"
+              alt="QR code — scan to get the WCPB app for iOS"
+              className="h-36 w-36 rounded-2xl bg-white p-2 shadow-float sm:h-40 sm:w-40"
+              width="160"
+              height="160"
+              loading="lazy"
+            />
+            <figcaption className="display text-xl tracking-wide text-cream-100">iOS</figcaption>
+          </figure>
+          <figure className="flex flex-col items-center gap-3">
+            <img
+              src="/images/badge-google-play.png"
+              alt="QR code — scan to get the WCPB app for Android"
+              className="h-36 w-36 rounded-2xl bg-white p-2 shadow-float sm:h-40 sm:w-40"
+              width="160"
+              height="160"
+              loading="lazy"
+            />
+            <figcaption className="display text-xl tracking-wide text-cream-100">Android</figcaption>
+          </figure>
         </Reveal>
       </div>
     </section>

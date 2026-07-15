@@ -1,5 +1,6 @@
 import Reveal from '../components/Reveal.jsx'
 import StatusChip from '../components/StatusChip.jsx'
+import PaddleMark from '../components/PaddleMark.jsx'
 import { LINKS, CONTACT, LESSONS, CLINIC_TOPICS } from '../data.js'
 
 export default function Programs() {
@@ -7,6 +8,7 @@ export default function Programs() {
     <>
       {/* header */}
       <section className="grain glow-dark relative overflow-hidden bg-green-950 pb-20 pt-24 lg:pb-28 lg:pt-32">
+        <PaddleMark />
         <div className="court-frame" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
           <p className="eyebrow rise text-cream-100" style={{ '--rise-delay': '60ms' }}>
