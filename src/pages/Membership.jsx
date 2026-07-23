@@ -82,7 +82,7 @@ function ComparisonTable() {
         Swipe to compare all four tiers →
       </p>
       <div className="relative mt-4 md:mt-8">
-        <div className="overflow-x-auto rounded-card border border-green-800/10 shadow-card">
+        <div className="contain-layout overflow-x-auto rounded-card border border-green-800/10 shadow-card">
           <table className="w-full min-w-[52rem] table-fixed border-collapse bg-cream-50 text-left font-body text-[15px] md:min-w-[60rem]">
             <colgroup>
               <col className="w-40 md:w-[14rem]" />
